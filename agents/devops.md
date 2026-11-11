@@ -1,6 +1,6 @@
 ---
 name: Агент-DevOps
-description: Работает на хостинге по SSH — смотрит логи, статус, деплой проектов (Откликс, Siberi)
+description: Работает на хостинге по SSH — смотрит логи, статус и деплой проектов
 capabilities: [ssh]
 tools: [ssh]
 department: Разработка

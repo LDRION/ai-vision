@@ -3,7 +3,7 @@
 
 По умолчанию мозг — Siberi Local на этом компьютере (aivision/vendor/siberi_local, тот же
 драйвер Google «Режима ИИ», что у siberi.online): он поднимается сам перед первым вопросом.
-SIBERI_BASE_URL в .env — другой адрес (например, https://siberi.online/api/v1/ai).
+SIBERI_BASE_URL в .env — адрес своего сервера Siberi (например, http://127.0.0.1:5005/api/v1/ai).
 
 POST /generate {prompt, system, image | images, wait:false} → taskId,
 затем поллинг GET /result/{taskId} до status=completed.

@@ -2,9 +2,9 @@
 /*
   Siberi Local — «мозг» Siberi на этом компьютере, без хостинга.
 
-  Тот же драйвер Google «Режима ИИ», что у siberi.online (googleai.js), но без MongoDB,
+  Тот же драйвер Google «Режима ИИ», что в сервере Siberi (googleai.js), но без MongoDB,
   платежей, ботов и кабинета: только то, чем пользуется AI Vision. API совместим с
-  https://siberi.online/api/v1/ai — клиенту достаточно сменить адрес:
+  API сервера Siberi (/api/v1/ai) — клиенту достаточно сменить адрес:
     POST /api/v1/ai/generate  {prompt, system?, image? | images?, wait?:false} → {taskId}
     GET  /api/v1/ai/result/:taskId → {status: pending|completed|error, result, partialResult, error}
     GET  /api/v1/ai/ping → {ok, browser, google}
