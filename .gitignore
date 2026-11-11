@@ -1,0 +1,41 @@
+# Секреты — никогда в git
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+build/
+dist/
+
+# Локальная копия MacroRec (свой репо: github.com/LDRION/macrorec)
+/macrorec/
+
+# Прогоны агента: скриншоты экрана, ответы ИИ — личные данные
+runs/
+
+*.log
+
+# Опыт агента: уроки с названиями окон и сайтов — локально
+experience/
+
+# Сценарии лаунчера: личные цели и подсказки — локально
+scenarios/
+
+# Сборка exe
+build_launcher.log
+launcher_app.spec
+
+# Рецепты сценариев (личное)
+recipes/
+build_dev.log
+
+# Операции компании ИИ (рантайм, 24/7) — вне git
+company/
+
+# Siberi Local: зависимости Node и профиль Edge (в нём вход в Google — личное)
+node_modules/
+aivision/vendor/siberi_local/edge-profile/

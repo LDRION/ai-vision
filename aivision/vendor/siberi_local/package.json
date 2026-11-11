@@ -1,0 +1,15 @@
+{
+  "name": "siberi-local",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Siberi brain on this computer: Google AI Mode driver from siberiai-v5, API compatible with siberi.online/api/v1/ai",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "login": "node server.js --login"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "playwright-core": "^1.58.1"
+  }
+}

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Vision — Лаунчер</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+  <!-- Значки одним набором (как в лаунчере Откликса): <use href="#i-…">. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="logo" viewBox="0 0 24 24"><path d="M2.6 12c2.3-4.4 5.5-6.6 9.4-6.6s7.1 2.2 9.4 6.6c-2.3 4.4-5.5 6.6-9.4 6.6S4.9 16.4 2.6 12z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><circle cx="12" cy="12" r="3.6" fill="currentColor"/><circle cx="13.3" cy="10.7" r="1.1" fill="#fff"/></symbol>
+    <symbol id="i-pilot" viewBox="0 0 16 16"><path d="M2 8.6h2.1l1.3-3.7 2 6.4 1.3-3.7H14"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 16 16"><path d="M4.3 2.5h4.9L12 5.3v8.2H4.3z"/><path d="M9 2.5v3h3M6.2 8.4h3.6M6.2 10.6h3.6"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><g stroke-width="2.1"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></g></symbol>
+    <symbol id="i-overview" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.6"/><path d="m10.2 5.8-1.4 3-3 1.4 1.4-3z"/></symbol>
+    <symbol id="i-feed" viewBox="0 0 16 16"><path d="M3 4h10M3 8h10M3 12h6"/></symbol>
+    <symbol id="i-send" viewBox="0 0 16 16"><path d="M13.6 2.4 2.4 7.2l4.4 1.6 1.6 4.4z"/><path d="m6.8 8.8 3.2-3.2"/></symbol>
+    <symbol id="i-ask" viewBox="0 0 16 16"><path d="M2.5 3.2c0-.4.3-.7.7-.7h9.6c.4 0 .7.3.7.7v6.4c0 .4-.3.7-.7.7H6.2l-2.9 2.4c-.3.2-.8 0-.8-.4z"/><path d="M8 5.1c.7 0 1.2.5 1.2 1.1 0 .5-.3.7-.7 1-.3.2-.5.4-.5.8"/></symbol>
+    <symbol id="i-hand" viewBox="0 0 16 16"><path d="M5.2 8.3V3.6a1 1 0 0 1 2 0v3.8M7.2 7V2.6a1 1 0 0 1 2 0V7M9.2 7V3.4a1 1 0 0 1 2 0v5.2M11.2 6.4a1 1 0 0 1 2 0v2.8c0 2.6-1.9 4.4-4.4 4.4H8c-1.4 0-2.4-.6-3.2-1.7L3 9.3a1 1 0 0 1 1.6-1.2l.6.8"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 16 16"><path d="M2.5 9.2 4.2 3.4c.1-.4.5-.7.9-.7h5.8c.4 0 .8.3.9.7l1.7 5.8v3.2c0 .5-.4.9-.9.9H3.4c-.5 0-.9-.4-.9-.9z"/><path d="M2.5 9.2h3.2l.9 1.6h2.8l.9-1.6h3.2"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 16 16"><path d="M1.8 8c1.5-2.9 3.6-4.4 6.2-4.4s4.7 1.5 6.2 4.4c-1.5 2.9-3.6 4.4-6.2 4.4S3.3 10.9 1.8 8z"/><circle cx="8" cy="8" r="2.1"/></symbol>
+    <symbol id="i-list" viewBox="0 0 16 16"><path d="M5.6 4h7.6M5.6 8h7.6M5.6 12h7.6"/><circle cx="2.9" cy="4" r=".7"/><circle cx="2.9" cy="8" r=".7"/><circle cx="2.9" cy="12" r=".7"/></symbol>
+    <symbol id="i-code" viewBox="0 0 16 16"><path d="M6.2 5 3.4 8l2.8 3M9.8 5l2.8 3-2.8 3"/></symbol>
+    <symbol id="i-play" viewBox="0 0 16 16"><path d="M5 3.4v9.2c0 .4.4.6.7.4l7-4.6c.3-.2.3-.6 0-.8l-7-4.6c-.3-.2-.7 0-.7.4z"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 16 16"><rect x="4" y="4" width="8" height="8" rx="1.6"/></symbol>
+    <symbol id="i-rec" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.6"/><circle cx="8" cy="8" r="2.4" fill="currentColor"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 16 16"><rect x="5.2" y="5.2" width="8" height="8" rx="1.6"/><path d="M10.8 5.2V3.6c0-.6-.5-1.1-1.1-1.1H3.6c-.6 0-1.1.5-1.1 1.1v6.1c0 .6.5 1.1 1.1 1.1h1.6"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.8"/><path d="M2.2 8h11.6M8 2.2c1.6 1.7 2.4 3.6 2.4 5.8S9.6 12.1 8 13.8C6.4 12.1 5.6 10.2 5.6 8S6.4 3.9 8 2.2z"/></symbol>
+    <symbol id="i-cpu" viewBox="0 0 16 16"><rect x="4" y="4" width="8" height="8" rx="1.6"/><path d="M6.4 1.8V4M9.6 1.8V4M6.4 12v2.2M9.6 12v2.2M1.8 6.4H4M1.8 9.6H4M12 6.4h2.2M12 9.6h2.2"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 16 16"><path d="M7.4 2.6c.5 3.1 1.7 4.3 4.8 4.8-3.1.5-4.3 1.7-4.8 4.8-.5-3.1-1.7-4.3-4.8-4.8 3.1-.5 4.3-1.7 4.8-4.8z"/><path d="M12.6 1.4c.2 1.1.6 1.5 1.7 1.7-1.1.2-1.5.6-1.7 1.7-.2-1.1-.6-1.5-1.7-1.7 1.1-.2 1.5-.6 1.7-1.7z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.8"/><path d="M8 4.8V8l2.2 1.4"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 16 16"><path d="M2.5 4.2c0-.5.4-.9.9-.9h2.8l1.3 1.4h5.1c.5 0 .9.4.9.9v6.3c0 .5-.4.9-.9.9H3.4c-.5 0-.9-.4-.9-.9z"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 16 16"><path d="m6 4 4 4-4 4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 16 16"><path d="m3.6 8.4 2.8 2.8 6-6.4"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 16 16"><path d="M8 3.5v9M3.5 8h9"/></symbol>
+    <symbol id="i-x" viewBox="0 0 16 16"><path d="m4.5 4.5 7 7M11.5 4.5l-7 7"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 16 16"><path d="M2.8 4.4h10.4M6.2 4.4V3.1c0-.3.3-.6.6-.6h2.4c.3 0 .6.3.6.6v1.3M4.3 4.4l.6 8.3c.1.6.5 1 1.1 1h4c.6 0 1-.4 1.1-1l.6-8.3M6.7 7v4.2M9.3 7v4.2"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 16 16"><path d="M13 7.2A5 5 0 0 0 4.1 4.6L2.8 6M3 8.8a5 5 0 0 0 8.9 2.6l1.3-1.4"/><path d="M2.8 2.8V6H6M13.2 13.2V10H10"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 16 16"><path d="M4.2 11V7.4a3.8 3.8 0 0 1 7.6 0V11l1.2 1.4H3z"/><path d="M6.6 13.6a1.5 1.5 0 0 0 2.8 0"/></symbol>
+    <symbol id="i-sword" viewBox="0 0 16 16"><path d="M13.5 2.5v3l-6.8 6.8-3-3 6.8-6.8h3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M3 9.6l3.4 3.4M2.5 13.5l2-2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-game" viewBox="0 0 16 16"><path d="M5 4.5h6a3.5 3.5 0 0 1 3.4 4.3l-.6 2.6a1.6 1.6 0 0 1-2.7.8L9.7 10.8H6.3l-1.4 1.4a1.6 1.6 0 0 1-2.7-.8l-.6-2.6A3.5 3.5 0 0 1 5 4.5z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M5 6.6v2.2M3.9 7.7h2.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="10.6" cy="7" r=".8"/><circle cx="12" cy="8.5" r=".8"/></symbol>
+    <symbol id="i-bolt"viewBox="0 0 16 16"><path d="M8.9 1.8 3.4 9h4.1l-.9 5.2L12.6 7H8.4z"/></symbol>
+    <symbol id="i-team" viewBox="0 0 16 16"><circle cx="6" cy="5.4" r="2.3"/><path d="M2.2 13c0-2.2 1.7-3.6 3.8-3.6s3.8 1.4 3.8 3.6"/><path d="M10.6 3.4a2 2 0 0 1 0 3.9M11.6 9.6c1.3.4 2.2 1.6 2.2 3.4"/></symbol>
+  </svg>
+
+  <div id="root">
+    <div class="win-controls">
+      <button class="win-btn" id="win-min" type="button" aria-label="Свернуть" title="Свернуть"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 6h8"/></svg></button>
+      <button class="win-btn win-btn--close" id="win-close" type="button" aria-label="Свернуть в трей" title="Свернуть в трей"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 3l6 6M9 3l-6 6"/></svg></button>
+    </div>
+
+    <div class="toasts" id="toasts" aria-live="polite"></div>
+
+    <div id="app-shell" class="shell">
+      <nav class="rail pywebview-drag-region" aria-label="Разделы">
+        <span class="rail__logo" title="AI Vision"><svg><use href="#logo"/></svg></span>
+        <button class="rail__btn active" type="button" data-view="pilot" title="Автопилот"><svg><use href="#i-pilot"/></svg></button>
+        <button class="rail__btn" type="button" data-view="scenarios" title="Сценарии"><svg><use href="#i-doc"/></svg></button>
+        <button class="rail__btn" type="button" data-view="settings" title="Настройки"><svg><use href="#i-gear"/></svg></button>
+        <span class="rail__spacer pywebview-drag-region"></span>
+        <button class="rail__btn rail__btn--quiet" type="button" id="open-data-btn" title="Папка с данными"><svg><use href="#i-folder"/></svg></button>
+      </nav>
+
+      <aside class="side">
+        <div class="side__nav" data-for="pilot">
+          <div class="side__title pywebview-drag-region">Автопилот</div>
+          <button class="nav-i active" type="button" data-panel="overview"><svg><use href="#i-overview"/></svg>Обзор</button>
+          <button class="nav-i" type="button" data-panel="quick"><svg><use href="#i-bolt"/></svg>Быстрая задача</button>
+          <button class="nav-i" type="button" data-panel="task"><svg><use href="#i-send"/></svg>Задача команде</button>
+          <button class="nav-i" type="button" data-panel="feed"><svg><use href="#i-feed"/></svg>Что происходит</button>
+          <div class="side__group">Нужно вам</div>
+          <button class="nav-i" type="button" data-panel="approvals"><svg><use href="#i-hand"/></svg>Одобрения<span class="cnt cnt--warn hidden" id="badge-approvals">0</span></button>
+          <button class="nav-i" type="button" data-panel="inbox"><svg><use href="#i-inbox"/></svg>Входящие<span class="cnt cnt--good hidden" id="badge-inbox">0</span></button>
+          <div class="side__group">Для разбора</div>
+          <button class="nav-i" type="button" data-panel="vision"><svg><use href="#i-eye"/></svg>Зрение<span class="vdot" id="vision-dot"></span></button>
+          <button class="nav-i" type="button" data-panel="tasks"><svg><use href="#i-list"/></svg>Задачи</button>
+          <button class="nav-i" type="button" data-panel="log"><svg><use href="#i-code"/></svg>Журнал работы</button>
+        </div>
+
+        <div class="side__nav hidden" data-for="scenarios">
+          <div class="side__title pywebview-drag-region">Сценарии</div>
+          <div class="scn-list" id="scn-list"></div>
+          <button class="nav-i nav-i--add" type="button" id="btn-new"><svg><use href="#i-plus"/></svg>Новый сценарий</button>
+          <button class="nav-i nav-i--add" type="button" id="btn-record"><svg><use href="#i-rec"/></svg>Записать показом</button>
+        </div>
+
+
+
+        <div class="side__nav hidden" data-for="settings">
+          <div class="side__title pywebview-drag-region">Настройки</div>
+          <button class="nav-i active" type="button" data-jump="sec-services"><svg><use href="#i-eye"/></svg>Службы</button>
+          <button class="nav-i" type="button" data-jump="sec-browser"><svg><use href="#i-globe"/></svg>Браузер</button>
+          <button class="nav-i" type="button" data-jump="sec-engine"><svg><use href="#i-cpu"/></svg>Движок</button>
+          <button class="nav-i" type="button" data-jump="sec-about"><svg><use href="#i-spark"/></svg>О программе</button>
+        </div>
+
+        <!-- Состояние — всегда на виду. -->
+        <div class="pilot">
+          <div class="pilot__row"><span class="status-dot" id="team-dot"></span><b id="team-text">Команда свободна</b></div>
+          <div class="svc">
+            <div class="svc__row" title="Screen Retina — живой индекс экрана: текст, кнопки, изменения"><span class="status-dot" id="svc-retina-dot"></span>Зрение<small id="svc-retina">…</small></div>
+            <div class="svc__row" title="Siberi — мозг: решает, что делать (Google «Режим ИИ» на этом компьютере)"><span class="status-dot" id="svc-siberi-dot"></span>Мозг<small id="svc-siberi">…</small></div>
+            <div class="svc__row" title="Ollama — локальная модель выбирает кнопку по смыслу"><span class="status-dot" id="svc-ollama-dot"></span>Локальная модель<small id="svc-ollama">…</small></div>
+          </div>
+          <button class="btn btn--line btn--block btn--sm hidden" id="stop-all-btn" type="button"><svg><use href="#i-stop"/></svg>Остановить</button>
+        </div>
+        <div class="side__user">
+          <span class="plan" id="today-badge">сегодня 0 задач</span>
+          <span class="side__email">AI Vision · оркестратор</span>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="main__head pywebview-drag-region">
+          <h1 id="main-title" class="pywebview-drag-region">Обзор</h1>
+          <div class="main__actions" id="main-actions"></div>
+        </header>
+        <div class="main__body" id="main-scroll">
+
+          <!-- ── Автопилот ── -->
+          <section class="view" id="view-pilot">
+            <div class="panel" id="overview">
+              <div class="ov-grid">
+                <div class="card ov-chart">
+                  <div class="ov-chart__head">
+                    <div><div class="label">Задачи за 14 дней</div><div class="big" id="chart-total">—</div></div>
+                    <div class="ov-chart__meta"><span>Сегодня</span><b class="plus" id="chart-today">—</b></div>
+                  </div>
+                  <div class="chart" id="chart"></div>
+                </div>
+                <div class="ov-side">
+                  <div class="card">
+                    <div class="card__head"><b>Нужно вам</b></div>
+                    <div class="tasks">
+                      <button class="trow" type="button" data-panel-go="approvals"><span class="trow__ico"><svg><use href="#i-hand"/></svg></span><span>Одобрить действие</span><span class="trow__n trow__n--warn" id="ov-approvals">·</span></button>
+                      <button class="trow" type="button" data-panel-go="inbox"><span class="trow__ico"><svg><use href="#i-inbox"/></svg></span><span>Входящие задачи</span><span class="trow__n trow__n--teal" id="ov-inbox">·</span></button>
+                      <button class="trow" type="button" data-panel-go="tasks"><span class="trow__ico"><svg><use href="#i-clock"/></svg></span><span>В работе</span><span class="trow__n" id="ov-active">·</span></button>
+                      <button class="trow" type="button" data-panel-go="tasks"><span class="trow__ico"><svg><use href="#i-x"/></svg></span><span>Не удались за неделю</span><span class="trow__n trow__n--warn" id="ov-failed">·</span></button>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card__head"><b>Последние задачи</b><button class="btn btn--line btn--xs" type="button" data-panel-go="tasks">Все</button></div>
+                    <div class="reslist" id="ov-recent"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="tiles">
+                <div class="tile stat-card stat-card--good"><span>Выполнено сегодня</span><b id="stat-done">—</b></div>
+                <div class="tile stat-card"><span>Задач сегодня</span><b id="stat-today">—</b></div>
+                <div class="tile stat-card"><span>Прогонов сценариев</span><b id="stat-runs">—</b></div>
+                <div class="tile stat-card"><span>Зрение</span><b class="tile__txt" id="stat-vision">—</b></div>
+              </div>
+            </div>
+
+            <div class="panel hidden" id="quick-panel">
+              <div class="card composer">
+                <label class="composer__label" for="q-req">Что сделать прямо сейчас?</label>
+                <textarea id="q-req" rows="3" placeholder="Например: открой Telegram и найди чат «Гера»"></textarea>
+                <div class="composer__row">
+                  <div class="examples" id="q-examples"></div>
+                  <div class="composer__btns">
+                    <button class="btn btn--line" type="button" id="q-save" title="Сохранить в сценарии. Если задача только что выполнена — вместе с рецептом, повтор пойдёт быстрым путём"><svg><use href="#i-plus"/></svg>В сценарии</button>
+                    <button class="btn btn--dark" type="button" id="q-run"><svg><use href="#i-bolt"/></svg>Выполнить</button>
+                  </div>
+                </div>
+                <p class="hint">Без плана и команды агентов: сразу смотрит на экран и делает. Ctrl+Enter — выполнить.</p>
+              </div>
+            </div>
+
+            <div class="panel hidden" id="task-panel">
+              <div class="card composer">
+                <label class="composer__label" for="t-req">Что сделать?</label>
+                <textarea id="t-req" rows="3" placeholder="Например: заведи телеграм-канал проекта и опубликуй первый пост"></textarea>
+                <div class="composer__row">
+                  <div class="examples" id="t-examples"></div>
+                  <div class="composer__btns">
+                    <button class="btn btn--line" type="button" id="t-plan">План</button>
+                    <button class="btn btn--dark" type="button" id="t-run"><svg><use href="#i-play"/></svg>Выполнить</button>
+                  </div>
+                </div>
+                <p class="hint">Ctrl+Enter — выполнить. Простые команды вида «Нажми «Опубликовать»» идут без модели, мгновенно.</p>
+              </div>
+              <div class="card hidden" id="t-plan-card">
+                <div class="card__head"><b>План</b><span class="chip chip--sm" id="t-plan-n"></span></div>
+                <div class="steps" id="t-plan-list"></div>
+              </div>
+              <div class="journal" id="t-log"><div class="empty empty--card" id="t-log-empty"><b>Здесь будет ход работы</b>Опишите задачу — оркестратор разложит её по агентам, а сюда пойдут их шаги.</div></div>
+            </div>
+
+            <div class="panel hidden" id="feed-panel">
+              <div class="table">
+                <div class="table__head ev ev--journal"><span>Время</span><span>Статус</span><span>Агент и задача</span></div>
+                <div class="table__body" id="feed"></div>
+                <div class="empty" id="feed-empty"><b>Пока тихо</b>Здесь появятся действия команды: кто что сделал и чем закончилось.</div>
+              </div>
+            </div>
+
+            <div class="panel hidden" id="approvals-panel">
+              <p class="excl__lead">Необратимое и денежное — оплату, удаление, отправку денег — команда без вашего «да» не делает. Задача ждёт здесь.</p>
+              <div class="mcards" id="approvals-list"></div>
+              <div class="empty empty--card" id="approvals-empty"><b>Одобрять нечего</b>Здесь появятся действия, которые ждут вашего решения.</div>
+            </div>
+
+            <div class="panel hidden" id="inbox-panel">
+              <p class="excl__lead">Задачи, которые поставил пульс (оценка просадок) или вы сами. Каждую можно отдать команде или убрать.</p>
+              <div class="mcards" id="inbox-list"></div>
+              <div class="empty empty--card" id="inbox-empty"><b>Входящих нет</b>Пульс кладёт сюда задачи, когда находит, что улучшить.</div>
+            </div>
+
+            <div class="panel hidden" id="vision-panel">
+              <div class="tiles">
+                <div class="tile"><span>Retina</span><b class="tile__txt" id="v-state">—</b></div>
+                <div class="tile"><span>Событий экрана</span><b id="v-events">—</b></div>
+                <div class="tile"><span>Задержка, p50</span><b id="v-lat">—</b></div>
+                <div class="tile stat-card--good has-value"><span>Экономия против скриншотов</span><b id="v-saving">—</b></div>
+              </div>
+              <div class="card">
+                <div class="card__head"><b>Что видит экран — живая лента</b><span class="chip chip--sm"><span class="live"></span>в реальном времени</span></div>
+                <div class="vfeed" id="v-feed"><div class="empty" id="v-empty"><b>Ждём событий</b>Как только на экране что-то изменится, это появится здесь — текстом, без скриншотов.</div></div>
+              </div>
+              <details class="card fold">
+                <summary class="card__head"><b>Служебный лог Retina</b><svg class="fold__chev"><use href="#i-chev"/></svg></summary>
+                <pre class="svclog" id="v-svclog">—</pre>
+              </details>
+            </div>
+
+            <div class="panel hidden" id="tasks-panel">
+              <div class="table">
+                <div class="table__head ev ev--task"><span>Когда</span><span>Статус</span><span>Задача</span><span></span></div>
+                <div class="table__body" id="tasks-list"></div>
+                <div class="empty" id="tasks-empty"><b>Задач ещё не было</b>Поставьте первую на вкладке «Задача команде».</div>
+              </div>
+            </div>
+
+            <div class="panel hidden" id="log-panel">
+              <div class="journal journal--full" id="log-feed"><div class="empty empty--card" id="log-empty"><b>Журнал пуст</b>Здесь появятся задачи по шагам: что агент сделал, как отреагировал экран и почему.</div></div>
+            </div>
+          </section>
+
+          <!-- ── Сценарии ── -->
+          <section class="view hidden" id="view-scenarios">
+            <div class="empty empty--card" id="scn-empty"><b>Сценариев пока нет</b>Создайте первый слева или запишите, показав действия мышью.</div>
+            <div id="scn-form" class="scn hidden">
+              <div class="card sec">
+                <div class="sec__head"><b>Название</b><p>Так сценарий будет называться в списке.</p></div>
+                <div class="sec__body"><input id="f-name" type="text" placeholder="Название сценария" /></div>
+              </div>
+              <div class="card sec">
+                <div class="sec__head"><b>Цель</b><p>Что должен сделать агент — обычным языком, как задачу человеку.</p></div>
+                <div class="sec__body"><textarea id="f-goal" rows="3" placeholder="Зайти в почту и открыть последнее письмо"></textarea></div>
+              </div>
+              <div class="card sec">
+                <div class="sec__head"><b>Подсказки</b><p>Как это делается — по одной на строку. Подсказки важнее догадок агента.</p></div>
+                <div class="sec__body"><textarea id="f-hints" rows="3" placeholder="Письма открываются двойным кликом"></textarea></div>
+              </div>
+              <div class="card sec">
+                <div class="sec__head"><b>Браузер и старт</b><p>Откроется перед запуском. Пусто — агент работает с тем, что на экране.</p></div>
+                <div class="sec__body">
+                  <label class="fld"><span>Браузер</span><select id="f-browser"></select></label>
+                  <label class="fld"><span>Стартовый адрес <i>необязательно</i></span><input id="f-url" type="text" placeholder="https://…" /></label>
+                  <label class="toggle"><span>Приватное окно</span><input type="checkbox" id="f-incognito" /></label>
+                </div>
+              </div>
+              <div class="card sec">
+                <div class="sec__head"><b>Параметры запуска</b><p>Лимит шагов, монитор и характер движения курсора.</p></div>
+                <div class="sec__body">
+                  <div class="grid2">
+                    <label class="fld"><span>Макс. шагов</span><input id="f-steps" type="number" min="1" max="60" /></label>
+                    <label class="fld"><span>Монитор</span><select id="f-monitor"><option value="0">авто</option></select></label>
+                    <label class="fld"><span>Скорость курсора</span><input id="f-speed" type="number" min="0.2" max="3" step="0.1" /></label>
+                    <label class="fld"><span>Шум траектории</span><input id="f-noise" type="number" min="0" max="3" step="0.1" /></label>
+                  </div>
+                  <label class="toggle"><span>Уточнять цель зумом</span><input type="checkbox" id="f-refine" /></label>
+                  <label class="toggle"><span>Накапливать опыт</span><input type="checkbox" id="f-learn" /></label>
+                  <label class="toggle"><span>Писать видео прогона</span><input type="checkbox" id="f-record" /></label>
+                  <label class="toggle"><span>Быстрый повтор по рецепту</span><input type="checkbox" id="f-fast" /></label>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card__head"><b>Прогон</b><span class="chip chip--sm" id="run-chip"><span class="status-dot" id="run-dot"></span><span id="run-text">готов</span></span></div>
+                <div class="journal journal--inset" id="run-log"><div class="empty" id="run-empty"><b>Ещё не запускали</b>Нажмите «Запустить» вверху — здесь пойдут шаги агента.</div></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ── Настройки ── -->
+          <section class="view hidden" id="view-settings">
+            <div class="card sec" id="sec-services">
+              <div class="sec__head"><b>Службы</b><p>Поднимаются сами вместе с лаунчером, отдельно ничего запускать не нужно. Закрыли лаунчер — зрение гаснет вместе с ним.</p></div>
+              <div class="sec__body">
+                <div class="acc">
+                  <div class="acc__row"><span class="status-dot" id="s-retina-dot"></span><span id="s-retina">Зрение (Screen Retina) — проверяю…</span><button class="btn btn--line btn--xs" id="s-restart" type="button"><svg><use href="#i-refresh"/></svg>Перезапустить</button><span></span></div>
+                  <div class="acc__row"><span class="status-dot" id="s-siberi-dot"></span><span id="s-siberi">Мозг (Siberi Local) — проверяю…</span><button class="btn btn--line btn--xs" id="s-siberi-login" type="button" title="Окно Edge с профилем Siberi: войдите в Google один раз — без входа «Режим ИИ» не понимает картинки"><svg><use href="#i-globe"/></svg>Войти в Google</button><span></span></div>
+                  <div class="acc__row"><span class="status-dot" id="s-ollama-dot"></span><span id="s-ollama">Локальная модель (Ollama) — проверяю…</span><span></span><span></span></div>
+                </div>
+                <p class="hint">Зрение — встроенная копия Screen Retina (порт 8766): внешний проект можно менять или удалить, здесь ничего не сломается.</p>
+              </div>
+            </div>
+            <div class="card sec" id="sec-browser">
+              <div class="sec__head"><b>Браузер по умолчанию</b><p>Для сценариев, где свой браузер не выбран.</p></div>
+              <div class="sec__body"><label class="fld"><span>Браузер</span><select id="s-default-browser"></select></label></div>
+            </div>
+            <div class="card sec" id="sec-engine">
+              <div class="sec__head"><b>Движок</b><p>Как агент находит, куда нажать: от бесплатного к дорогому.</p></div>
+              <div class="sec__body">
+                <ol class="tiers">
+                  <li><b>Зрение</b><span>живой индекс экрана — текст и кнопки за ~20 мс</span></li>
+                  <li><b>Рефлекс</b><span>команды «Нажми «…»» — без модели</span></li>
+                  <li><b>Локальная модель</b><span>синонимы и переводы — «Close» → «Закрыть»</span></li>
+                  <li><b>Иконки</b><span>подсказка при наведении, словарь иконок</span></li>
+                  <li><b>Большая модель</b><span>сначала текстом, скриншот — только когда нужно</span></li>
+                </ol>
+                <p class="hint" id="s-vision">—</p>
+              </div>
+            </div>
+            <div class="card sec" id="sec-about">
+              <div class="sec__head"><b>О программе</b><p>AI Vision — оркестратор команды ИИ-агентов, которые работают на этом компьютере.</p></div>
+              <div class="sec__body">
+                <dl class="kv"><dt>Данные</dt><dd><a href="#" id="open-data-link">открыть папку</a></dd><dt>Зрение</dt><dd id="s-vendored">—</dd><dt>Старый вид</dt><dd>python -m aivision --classic</dd></dl>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="journal.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
